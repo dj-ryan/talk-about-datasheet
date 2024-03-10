@@ -1,0 +1,638 @@
+{
+  "nodes": [
+    {
+      "id": "retrievalQAChain_0",
+      "position": {
+        "x": 1097.9722624033063,
+        "y": 339.1689328831201
+      },
+      "type": "customNode",
+      "data": {
+        "id": "retrievalQAChain_0",
+        "label": "Retrieval QA Chain",
+        "version": 1,
+        "name": "retrievalQAChain",
+        "type": "RetrievalQAChain",
+        "baseClasses": [
+          "RetrievalQAChain",
+          "BaseChain",
+          "Runnable"
+        ],
+        "category": "Chains",
+        "description": "QA chain to answer a question based on the retrieved documents",
+        "inputParams": [],
+        "inputAnchors": [
+          {
+            "label": "Language Model",
+            "name": "model",
+            "type": "BaseLanguageModel",
+            "id": "retrievalQAChain_0-input-model-BaseLanguageModel"
+          },
+          {
+            "label": "Vector Store Retriever",
+            "name": "vectorStoreRetriever",
+            "type": "BaseRetriever",
+            "id": "retrievalQAChain_0-input-vectorStoreRetriever-BaseRetriever"
+          }
+        ],
+        "inputs": {
+          "model": "{{chatGoogleGenerativeAI_0.data.instance}}",
+          "vectorStoreRetriever": "{{memoryVectorStore_0.data.instance}}"
+        },
+        "outputAnchors": [
+          {
+            "id": "retrievalQAChain_0-output-retrievalQAChain-RetrievalQAChain|BaseChain|Runnable",
+            "name": "retrievalQAChain",
+            "label": "RetrievalQAChain",
+            "description": "QA chain to answer a question based on the retrieved documents",
+            "type": "RetrievalQAChain | BaseChain | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 281,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 1097.9722624033063,
+        "y": 339.1689328831201
+      },
+      "dragging": false
+    },
+    {
+      "id": "memoryVectorStore_0",
+      "position": {
+        "x": 689.5560892382981,
+        "y": 432.8504597595268
+      },
+      "type": "customNode",
+      "data": {
+        "id": "memoryVectorStore_0",
+        "label": "In-Memory Vector Store",
+        "version": 1,
+        "name": "memoryVectorStore",
+        "type": "Memory",
+        "baseClasses": [
+          "Memory",
+          "VectorStoreRetriever",
+          "BaseRetriever"
+        ],
+        "category": "Vector Stores",
+        "description": "In-memory vectorstore that stores embeddings and does an exact, linear search for the most similar embeddings.",
+        "inputParams": [
+          {
+            "label": "Top K",
+            "name": "topK",
+            "description": "Number of top results to fetch. Default to 4",
+            "placeholder": "4",
+            "type": "number",
+            "optional": true,
+            "id": "memoryVectorStore_0-input-topK-number"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Document",
+            "name": "document",
+            "type": "Document",
+            "list": true,
+            "optional": true,
+            "id": "memoryVectorStore_0-input-document-Document"
+          },
+          {
+            "label": "Embeddings",
+            "name": "embeddings",
+            "type": "Embeddings",
+            "id": "memoryVectorStore_0-input-embeddings-Embeddings"
+          }
+        ],
+        "inputs": {
+          "document": [
+            "{{textFile_0.data.instance}}"
+          ],
+          "embeddings": "{{googleGenerativeAiEmbeddings_0.data.instance}}",
+          "topK": "10"
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "",
+            "options": [
+              {
+                "id": "memoryVectorStore_0-output-retriever-Memory|VectorStoreRetriever|BaseRetriever",
+                "name": "retriever",
+                "label": "Memory Retriever",
+                "description": "",
+                "type": "Memory | VectorStoreRetriever | BaseRetriever"
+              },
+              {
+                "id": "memoryVectorStore_0-output-vectorStore-Memory|VectorStore",
+                "name": "vectorStore",
+                "label": "Memory Vector Store",
+                "description": "",
+                "type": "Memory | VectorStore"
+              }
+            ],
+            "default": "retriever"
+          }
+        ],
+        "outputs": {
+          "output": "retriever"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 407,
+      "selected": false,
+      "dragging": false,
+      "positionAbsolute": {
+        "x": 689.5560892382981,
+        "y": 432.8504597595268
+      }
+    },
+    {
+      "id": "textFile_0",
+      "position": {
+        "x": -231.72086238303586,
+        "y": -55.09763120062908
+      },
+      "type": "customNode",
+      "data": {
+        "id": "textFile_0",
+        "label": "Text File",
+        "version": 3,
+        "name": "textFile",
+        "type": "Document",
+        "baseClasses": [
+          "Document"
+        ],
+        "category": "Document Loaders",
+        "description": "Load data from text files",
+        "inputParams": [
+          {
+            "label": "Txt File",
+            "name": "txtFile",
+            "type": "file",
+            "fileType": ".txt, .html, .aspx, .asp, .cpp, .c, .cs, .css, .go, .h, .java, .js, .less, .ts, .php, .proto, .python, .py, .rst, .ruby, .rb, .rs, .scala, .sc, .scss, .sol, .sql, .swift, .markdown, .md, .tex, .ltx, .vb, .xml",
+            "id": "textFile_0-input-txtFile-file"
+          },
+          {
+            "label": "Metadata",
+            "name": "metadata",
+            "type": "json",
+            "optional": true,
+            "additionalParams": true,
+            "id": "textFile_0-input-metadata-json"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Text Splitter",
+            "name": "textSplitter",
+            "type": "TextSplitter",
+            "optional": true,
+            "id": "textFile_0-input-textSplitter-TextSplitter"
+          }
+        ],
+        "inputs": {
+          "textSplitter": "{{markdownTextSplitter_0.data.instance}}",
+          "metadata": ""
+        },
+        "outputAnchors": [
+          {
+            "name": "output",
+            "label": "Output",
+            "type": "options",
+            "description": "Array of document objects containing metadata and pageContent",
+            "options": [
+              {
+                "id": "textFile_0-output-document-Document|json",
+                "name": "document",
+                "label": "Document",
+                "description": "Array of document objects containing metadata and pageContent",
+                "type": "Document | json"
+              },
+              {
+                "id": "textFile_0-output-text-string|json",
+                "name": "text",
+                "label": "Text",
+                "description": "Concatenated string from pageContent of documents",
+                "type": "string | json"
+              }
+            ],
+            "default": "document"
+          }
+        ],
+        "outputs": {
+          "output": "document"
+        },
+        "selected": false
+      },
+      "width": 300,
+      "height": 439,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -231.72086238303586,
+        "y": -55.09763120062908
+      },
+      "dragging": false
+    },
+    {
+      "id": "googleGenerativeAiEmbeddings_0",
+      "position": {
+        "x": -226.22042027536898,
+        "y": 430.5025617307606
+      },
+      "type": "customNode",
+      "data": {
+        "id": "googleGenerativeAiEmbeddings_0",
+        "label": "GoogleGenerativeAI Embeddings",
+        "version": 1,
+        "name": "googleGenerativeAiEmbeddings",
+        "type": "GoogleGenerativeAiEmbeddings",
+        "baseClasses": [
+          "GoogleGenerativeAiEmbeddings",
+          "Embeddings"
+        ],
+        "category": "Embeddings",
+        "description": "Google Generative API to generate embeddings for a given text",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "googleGenerativeAI"
+            ],
+            "optional": false,
+            "description": "Google Generative AI credential.",
+            "id": "googleGenerativeAiEmbeddings_0-input-credential-credential"
+          },
+          {
+            "label": "Model Name",
+            "name": "modelName",
+            "type": "options",
+            "options": [
+              {
+                "label": "embedding-001",
+                "name": "embedding-001"
+              }
+            ],
+            "default": "embedding-001",
+            "id": "googleGenerativeAiEmbeddings_0-input-modelName-options"
+          },
+          {
+            "label": "Task Type",
+            "name": "tasktype",
+            "type": "options",
+            "description": "Type of task for which the embedding will be used",
+            "options": [
+              {
+                "label": "TASK_TYPE_UNSPECIFIED",
+                "name": "TASK_TYPE_UNSPECIFIED"
+              },
+              {
+                "label": "RETRIEVAL_QUERY",
+                "name": "RETRIEVAL_QUERY"
+              },
+              {
+                "label": "RETRIEVAL_DOCUMENT",
+                "name": "RETRIEVAL_DOCUMENT"
+              },
+              {
+                "label": "SEMANTIC_SIMILARITY",
+                "name": "SEMANTIC_SIMILARITY"
+              },
+              {
+                "label": "CLASSIFICATION",
+                "name": "CLASSIFICATION"
+              },
+              {
+                "label": "CLUSTERING",
+                "name": "CLUSTERING"
+              }
+            ],
+            "default": "TASK_TYPE_UNSPECIFIED",
+            "id": "googleGenerativeAiEmbeddings_0-input-tasktype-options"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "modelName": "embedding-001",
+          "tasktype": "TASK_TYPE_UNSPECIFIED"
+        },
+        "outputAnchors": [
+          {
+            "id": "googleGenerativeAiEmbeddings_0-output-googleGenerativeAiEmbeddings-GoogleGenerativeAiEmbeddings|Embeddings",
+            "name": "googleGenerativeAiEmbeddings",
+            "label": "GoogleGenerativeAiEmbeddings",
+            "description": "Google Generative API to generate embeddings for a given text",
+            "type": "GoogleGenerativeAiEmbeddings | Embeddings"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 469,
+      "positionAbsolute": {
+        "x": -226.22042027536898,
+        "y": 430.5025617307606
+      },
+      "selected": false,
+      "dragging": false
+    },
+    {
+      "id": "chatGoogleGenerativeAI_0",
+      "position": {
+        "x": 678.4883897482571,
+        "y": -182.46264703707737
+      },
+      "type": "customNode",
+      "data": {
+        "id": "chatGoogleGenerativeAI_0",
+        "label": "ChatGoogleGenerativeAI",
+        "version": 1,
+        "name": "chatGoogleGenerativeAI",
+        "type": "ChatGoogleGenerativeAI",
+        "baseClasses": [
+          "ChatGoogleGenerativeAI",
+          "BaseChatModel",
+          "BaseLanguageModel",
+          "Runnable"
+        ],
+        "category": "Chat Models",
+        "description": "Wrapper around Google Gemini large language models that use the Chat endpoint",
+        "inputParams": [
+          {
+            "label": "Connect Credential",
+            "name": "credential",
+            "type": "credential",
+            "credentialNames": [
+              "googleGenerativeAI"
+            ],
+            "optional": false,
+            "description": "Google Generative AI credential.",
+            "id": "chatGoogleGenerativeAI_0-input-credential-credential"
+          },
+          {
+            "label": "Model Name",
+            "name": "modelName",
+            "type": "options",
+            "options": [
+              {
+                "label": "gemini-pro",
+                "name": "gemini-pro"
+              }
+            ],
+            "default": "gemini-pro",
+            "id": "chatGoogleGenerativeAI_0-input-modelName-options"
+          },
+          {
+            "label": "Temperature",
+            "name": "temperature",
+            "type": "number",
+            "step": 0.1,
+            "default": 0.9,
+            "optional": true,
+            "id": "chatGoogleGenerativeAI_0-input-temperature-number"
+          },
+          {
+            "label": "Max Output Tokens",
+            "name": "maxOutputTokens",
+            "type": "number",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-maxOutputTokens-number"
+          },
+          {
+            "label": "Top Probability",
+            "name": "topP",
+            "type": "number",
+            "step": 0.1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-topP-number"
+          },
+          {
+            "label": "Top Next Highest Probability Tokens",
+            "name": "topK",
+            "type": "number",
+            "description": "Decode using top-k sampling: consider the set of top_k most probable tokens. Must be positive",
+            "step": 1,
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-topK-number"
+          },
+          {
+            "label": "Harm Category",
+            "name": "harmCategory",
+            "type": "multiOptions",
+            "description": "Refer to <a target=\"_blank\" href=\"https://cloud.google.com/vertex-ai/docs/generative-ai/multimodal/configure-safety-attributes#safety_attribute_definitions\">official guide</a> on how to use Harm Category",
+            "options": [
+              {
+                "label": "Dangerous",
+                "name": "HARM_CATEGORY_DANGEROUS_CONTENT"
+              },
+              {
+                "label": "Harassment",
+                "name": "HARM_CATEGORY_HARASSMENT"
+              },
+              {
+                "label": "Hate Speech",
+                "name": "HARM_CATEGORY_HATE_SPEECH"
+              },
+              {
+                "label": "Sexually Explicit",
+                "name": "HARM_CATEGORY_SEXUALLY_EXPLICIT"
+              }
+            ],
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-harmCategory-multiOptions"
+          },
+          {
+            "label": "Harm Block Threshold",
+            "name": "harmBlockThreshold",
+            "type": "multiOptions",
+            "description": "Refer to <a target=\"_blank\" href=\"https://cloud.google.com/vertex-ai/docs/generative-ai/multimodal/configure-safety-attributes#safety_setting_thresholds\">official guide</a> on how to use Harm Block Threshold",
+            "options": [
+              {
+                "label": "Low and Above",
+                "name": "BLOCK_LOW_AND_ABOVE"
+              },
+              {
+                "label": "Medium and Above",
+                "name": "BLOCK_MEDIUM_AND_ABOVE"
+              },
+              {
+                "label": "None",
+                "name": "BLOCK_NONE"
+              },
+              {
+                "label": "Only High",
+                "name": "BLOCK_ONLY_HIGH"
+              },
+              {
+                "label": "Threshold Unspecified",
+                "name": "HARM_BLOCK_THRESHOLD_UNSPECIFIED"
+              }
+            ],
+            "optional": true,
+            "additionalParams": true,
+            "id": "chatGoogleGenerativeAI_0-input-harmBlockThreshold-multiOptions"
+          }
+        ],
+        "inputAnchors": [
+          {
+            "label": "Cache",
+            "name": "cache",
+            "type": "BaseCache",
+            "optional": true,
+            "id": "chatGoogleGenerativeAI_0-input-cache-BaseCache"
+          }
+        ],
+        "inputs": {
+          "cache": "",
+          "modelName": "gemini-pro",
+          "temperature": 0.9,
+          "maxOutputTokens": "",
+          "topP": "",
+          "topK": "",
+          "harmCategory": "",
+          "harmBlockThreshold": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "chatGoogleGenerativeAI_0-output-chatGoogleGenerativeAI-ChatGoogleGenerativeAI|BaseChatModel|BaseLanguageModel|Runnable",
+            "name": "chatGoogleGenerativeAI",
+            "label": "ChatGoogleGenerativeAI",
+            "description": "Wrapper around Google Gemini large language models that use the Chat endpoint",
+            "type": "ChatGoogleGenerativeAI | BaseChatModel | BaseLanguageModel | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 576,
+      "selected": false,
+      "positionAbsolute": {
+        "x": 678.4883897482571,
+        "y": -182.46264703707737
+      },
+      "dragging": false
+    },
+    {
+      "id": "markdownTextSplitter_0",
+      "position": {
+        "x": -646.6157956565166,
+        "y": -102.68001811925049
+      },
+      "type": "customNode",
+      "data": {
+        "id": "markdownTextSplitter_0",
+        "label": "Markdown Text Splitter",
+        "version": 1,
+        "name": "markdownTextSplitter",
+        "type": "MarkdownTextSplitter",
+        "baseClasses": [
+          "MarkdownTextSplitter",
+          "RecursiveCharacterTextSplitter",
+          "TextSplitter",
+          "BaseDocumentTransformer",
+          "Runnable"
+        ],
+        "category": "Text Splitters",
+        "description": "Split your content into documents based on the Markdown headers",
+        "inputParams": [
+          {
+            "label": "Chunk Size",
+            "name": "chunkSize",
+            "type": "number",
+            "default": 1000,
+            "optional": true,
+            "id": "markdownTextSplitter_0-input-chunkSize-number"
+          },
+          {
+            "label": "Chunk Overlap",
+            "name": "chunkOverlap",
+            "type": "number",
+            "optional": true,
+            "id": "markdownTextSplitter_0-input-chunkOverlap-number"
+          }
+        ],
+        "inputAnchors": [],
+        "inputs": {
+          "chunkSize": 1000,
+          "chunkOverlap": ""
+        },
+        "outputAnchors": [
+          {
+            "id": "markdownTextSplitter_0-output-markdownTextSplitter-MarkdownTextSplitter|RecursiveCharacterTextSplitter|TextSplitter|BaseDocumentTransformer|Runnable",
+            "name": "markdownTextSplitter",
+            "label": "MarkdownTextSplitter",
+            "description": "Split your content into documents based on the Markdown headers",
+            "type": "MarkdownTextSplitter | RecursiveCharacterTextSplitter | TextSplitter | BaseDocumentTransformer | Runnable"
+          }
+        ],
+        "outputs": {},
+        "selected": false
+      },
+      "width": 300,
+      "height": 378,
+      "selected": false,
+      "positionAbsolute": {
+        "x": -646.6157956565166,
+        "y": -102.68001811925049
+      },
+      "dragging": false
+    }
+  ],
+  "edges": [
+    {
+      "source": "textFile_0",
+      "sourceHandle": "textFile_0-output-document-Document|json",
+      "target": "memoryVectorStore_0",
+      "targetHandle": "memoryVectorStore_0-input-document-Document",
+      "type": "buttonedge",
+      "id": "textFile_0-textFile_0-output-document-Document|json-memoryVectorStore_0-memoryVectorStore_0-input-document-Document"
+    },
+    {
+      "source": "googleGenerativeAiEmbeddings_0",
+      "sourceHandle": "googleGenerativeAiEmbeddings_0-output-googleGenerativeAiEmbeddings-GoogleGenerativeAiEmbeddings|Embeddings",
+      "target": "memoryVectorStore_0",
+      "targetHandle": "memoryVectorStore_0-input-embeddings-Embeddings",
+      "type": "buttonedge",
+      "id": "googleGenerativeAiEmbeddings_0-googleGenerativeAiEmbeddings_0-output-googleGenerativeAiEmbeddings-GoogleGenerativeAiEmbeddings|Embeddings-memoryVectorStore_0-memoryVectorStore_0-input-embeddings-Embeddings"
+    },
+    {
+      "source": "chatGoogleGenerativeAI_0",
+      "sourceHandle": "chatGoogleGenerativeAI_0-output-chatGoogleGenerativeAI-ChatGoogleGenerativeAI|BaseChatModel|BaseLanguageModel|Runnable",
+      "target": "retrievalQAChain_0",
+      "targetHandle": "retrievalQAChain_0-input-model-BaseLanguageModel",
+      "type": "buttonedge",
+      "id": "chatGoogleGenerativeAI_0-chatGoogleGenerativeAI_0-output-chatGoogleGenerativeAI-ChatGoogleGenerativeAI|BaseChatModel|BaseLanguageModel|Runnable-retrievalQAChain_0-retrievalQAChain_0-input-model-BaseLanguageModel"
+    },
+    {
+      "source": "memoryVectorStore_0",
+      "sourceHandle": "memoryVectorStore_0-output-retriever-Memory|VectorStoreRetriever|BaseRetriever",
+      "target": "retrievalQAChain_0",
+      "targetHandle": "retrievalQAChain_0-input-vectorStoreRetriever-BaseRetriever",
+      "type": "buttonedge",
+      "id": "memoryVectorStore_0-memoryVectorStore_0-output-retriever-Memory|VectorStoreRetriever|BaseRetriever-retrievalQAChain_0-retrievalQAChain_0-input-vectorStoreRetriever-BaseRetriever"
+    },
+    {
+      "source": "markdownTextSplitter_0",
+      "sourceHandle": "markdownTextSplitter_0-output-markdownTextSplitter-MarkdownTextSplitter|RecursiveCharacterTextSplitter|TextSplitter|BaseDocumentTransformer|Runnable",
+      "target": "textFile_0",
+      "targetHandle": "textFile_0-input-textSplitter-TextSplitter",
+      "type": "buttonedge",
+      "id": "markdownTextSplitter_0-markdownTextSplitter_0-output-markdownTextSplitter-MarkdownTextSplitter|RecursiveCharacterTextSplitter|TextSplitter|BaseDocumentTransformer|Runnable-textFile_0-textFile_0-input-textSplitter-TextSplitter"
+    }
+  ]
+}
